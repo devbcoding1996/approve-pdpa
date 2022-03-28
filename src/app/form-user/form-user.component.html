@@ -1,0 +1,225 @@
+<div class="container container-bg  py-3 mt-2 shadow-sm">
+  <main>
+    <div class="row g-5">
+      <div class="col-md-12 col-lg-12">
+        <div class="text-center py-5 header-bg">
+          <img src="../../assets/img/Suzuki_Motor_Corporation_logo.svg.png" alt="" height="57">
+        </div>
+        <h4 class="my-3 text-primary">ข้อมูลของท่านที่ถูกจัดเก็บ</h4>
+        <form [formGroup]="angForm" #userForm="ngForm" (ngSubmit)="getUserFormData(userForm.value)" novalidate
+          class="needs-validation">
+          <div class="row g-3">
+            <div class="col-sm-6">
+              <label for="uCard" class="form-label">หมายเลขบัตรประชาชน</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text">
+                  <fa-icon [icon]="faAddressCard"></fa-icon>
+                </span>
+                <input type="text" class="form-control" id="uCard" ngModel formControlName="uCard" autocomplete="off"
+                  placeholder="กรอกหมายเลขบัตรประชาชน">
+              </div>
+              <div
+                *ngIf="angForm.controls['uCard'].invalid && (angForm.controls['uCard'].dirty || angForm.controls['uCard'].touched)"
+                class="text-danger">
+                <p class="m-0" *ngIf="angForm.controls['uCard'].errors?.['required']">
+                  กรุณากรอกหมายเลขบัตรประชาชน.
+                </p>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <label for="uFullName" class="form-label">ชื่อ-นามสกุล ผู้เอาประกันภัย</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text">
+                  <fa-icon [icon]="faUser"></fa-icon>
+                </span>
+                <input type="text" class="form-control" id="uFullName" ngModel formControlName="uFullName"
+                  placeholder="กรอกชื่อ-นามสกุล ผู้เอาประกันภัย" value="">
+              </div>
+              <div
+                *ngIf="angForm.controls['uFullName'].invalid && (angForm.controls['uFullName'].dirty || angForm.controls['uFullName'].touched)"
+                class="text-danger">
+                <div *ngIf="angForm.controls['uFullName'].errors?.['required']">
+                  กรุณากรอกชื่อ-นามสกุล ผู้เอาประกันภัย.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <label for="uTel" class="form-label">เบอร์โทรศัพท์</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text">
+                  <fa-icon [icon]="faPhone"></fa-icon>
+                </span>
+                <input type="tel" class="form-control" id="uTel" ngModel formControlName="uTel" maxlength="10"
+                  autocomplete="off" placeholder="กรอกเบอร์โทรศัพท์" value="">
+              </div>
+              <div *ngIf="angForm.controls['uTel'].invalid && angForm.controls['uTel'].touched" class="text-danger">
+                <div *ngIf="angForm.controls['uTel'].errors?.['required']">
+                  กรุณากรอกเบอร์โทรศัพท์.
+                </div>
+                <div
+                  *ngIf="angForm.controls['uTel'].errors?.['pattern'] || angForm.controls['uTel'].errors?.['minlength']">
+                  กรุณากรอกเบอร์ให้ครบ.
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-4">
+              <label for="uCarCody" class="form-label">เลขตัวถังรถยนต์</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text">
+                  <fa-icon [icon]="faCar"></fa-icon>
+                </span>
+                <input type="email" class="form-control" id="uCarCody" ngModel formControlName="uCarCody"
+                  placeholder="กรอกเลขตัวถังรถยนต์" value="">
+              </div>
+              <div
+                *ngIf="angForm.controls['uCarCody'].invalid && (angForm.controls['uCarCody'].dirty || angForm.controls['uCarCody'].touched)"
+                class="text-danger">
+                <div *ngIf="angForm.controls['uCarCody'].errors?.['required']">
+                  กรุณากรอกเลขตัวถังรถยนต์.
+                </div>
+                <div *ngIf="angForm.controls['uCarCody'].errors?.['pattern']">
+                  ไม่อนุญาติกรอกภาษาไทย.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <label for="uCarMotor" class="form-label">เลขตัวเครื่องรถยนต์</label>
+              <div class="input-group has-validation">
+                <span class="input-group-text">
+                  <fa-icon [icon]="faCar"></fa-icon>
+                </span>
+                <input type="text" class="form-control" id="uCarMotor" formControlName="uCarMotor"
+                  placeholder="กรอกเลขตัวเครื่องรถยนต์">
+              </div>
+              <div
+                *ngIf="angForm.controls['uCarMotor'].invalid && (angForm.controls['uCarMotor'].dirty || angForm.controls['uCarMotor'].touched)"
+                class="text-danger">
+                <div *ngIf="angForm.controls['uCarMotor'].errors?.['required']">
+                  กรุณากรอกเลขตัวเครื่องรถยนต์.
+                </div>
+                <div *ngIf="angForm.controls['uCarMotor'].errors?.['pattern']">
+                  ไม่อนุญาติกรอกภาษาไทย.
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm-12 my-4">
+            <div class="card">
+              <div class="card-header">
+                <h5 class="card-title m-0">เงื่อนไขและข้อตกลง</h5>
+              </div>
+              <div class="card-body">
+                <p class="card-text">
+                  • ข้าพเจ้าตกลงยินยอมระบุตัวตนและยืนยันตัวตนแท้จริงตามกฏหมายว่าด้วยการป้องกันและปราบปรามการฟอกเงิน
+                </p>
+                <p class="card-text">
+                  • ข้าพเจ้าตกลงยินยอมให้ทางบริษัท โฟร์ อินชัวร์รันส์ โบรกเกอร์
+                  จำกัด จัดเก็บข้อมูล
+                  รวบรวม ใช้ และเปิดเผยข้อมูลข้างต้น ของข้าพเจ้าเพื่อให้จัดทำกรมธรรม์ประกันภัยรถยนต์ ของบริษัท
+                  วิริยะประกันภัย จำกัด (มหาชน) และใช้ในการแจ้งสิทธิประโชยน์ในกรมธรรม์ประกันภัยของท่าน
+                  และประชาสัมพันธ์ข้อมูลข่าวสารด้านประกันภัยที่เป็นประโยชน์ รวมถึงนำเสนอผลิตภัณฑ์และบริการต่างๆ
+                  ของบริษัทฯ ในอนาคตผ่านช่องทางต่างๆ ของบริษัทฯ โดยพร้อมปฏิบัติตามกฏหมายว่าด้วยการคุ้มครองส่วนบุคคล
+                </p>
+                <p class="card-text">**ขอให้ท่านอ่านและทำความเข้าใจ "นโยบายความเป็นส่วนตัว" ของบริษัทฯ
+                  เพื่อรับทราบถึงสิทธิต่างๆ ของท่าน และนโยบายของบริษัทฯ
+                  ในการปฏิบัติตามประราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562** <a href="#"
+                    class="text-decoration-none" data-bs-toggle="modal"
+                    data-bs-target="#policyModal">>>นโยบายความเป็นส่วนตัว</a></p>
+                <!-- Button trigger modal -->
+
+                <!-- Modal -->
+                <div class="modal fade" id="policyModal" tabindex="-1" aria-labelledby="policyModalLabel"
+                  aria-hidden="true">
+                  <div class="modal-dialog  modal-xl">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="policyModalLabel">นโยบายความเป็นส่วนตัว</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                        <p class="card-text">&nbsp;&nbsp;Ex est adipisicing nostrud deserunt officia ut id elit. Dolore
+                          occaecat elit anim
+                          sunt cupidatat
+                          proident. Occaecat duis incididunt qui labore aliqua culpa qui consequat ad officia occaecat
+                          sit. Excepteur tempor in id non sit in eu enim magna duis duis. Velit eiusmod Lorem pariatur
+                          nisi et sint consequat non dolor veniam. Officia cillum magna veniam ad. Eu tempor sint id
+                          voluptate aute enim dolore ex voluptate. </p>
+
+                        <p class="card-text">&nbsp;&nbsp;Quis incididunt sit minim occaecat est laboris nulla
+                          adipisicing aliqua in ut dolor.
+                          Consectetur tempor sint sit Lorem qui occaecat et culpa. Labore tempor ullamco nulla nostrud
+                          labore incididunt fugiat reprehenderit magna. </p>
+
+                        <p class="card-text">&nbsp;&nbsp;Enim minim cillum ex magna amet. Ullamco id fugiat nostrud
+                          veniam consequat sunt nostrud. Aute
+                          tempor amet fugiat adipisicing magna.</p>
+
+                        <p class="card-text">&nbsp;&nbsp;Quis id non ut dolore anim qui laboris in sit est nulla commodo
+                          aliqua. Cillum deserunt
+                          voluptate occaecat quis magna magna voluptate id consectetur pariatur consequat nulla laborum
+                          incididunt. Occaecat ad ea ex duis sunt irure mollit commodo. Minim dolore fugiat ipsum amet
+                          nisi et. Nisi laboris proident velit Lorem adipisicing duis cillum adipisicing nulla.
+                          Adipisicing eiusmod non fugiat amet. Aliquip ut esse adipisicing excepteur.</p>
+
+                        <p class="card-text">&nbsp;&nbsp;Reprehenderit sit cupidatat veniam aliquip ullamco. In in enim
+                          quis dolor pariatur et occaecat
+                          cupidatat. Labore labore nisi aliquip eiusmod. Deserunt veniam nulla nostrud quis occaecat.
+                          Minim et consequat nulla deserunt velit in cillum labore ad.</p>
+
+                        <p class="card-text">&nbsp;&nbsp;Sint nulla exercitation proident dolor sint incididunt occaecat
+                          laboris. Irure est incididunt
+                          laborum commodo nisi non ipsum dolore. Culpa in ex reprehenderit quis deserunt esse ipsum. In
+                          do
+                          consectetur nulla nostrud dolor mollit pariatur est aliqua ea magna incididunt aliquip. Aute
+                          commodo magna in nulla veniam labore. Voluptate reprehenderit fugiat incididunt officia cillum
+                          qui qui excepteur dolor cillum laboris.</p>
+
+                        <p class="card-text">&nbsp;&nbsp;Consequat elit nostrud ut est pariatur sint incididunt eiusmod.
+                          Minim veniam dolor ullamco nulla
+                          do duis commodo qui deserunt fugiat deserunt irure pariatur. Ad mollit sunt fugiat voluptate
+                          sint pariatur velit.</p>
+
+                        <p class="card-text">&nbsp;&nbsp;Fugiat Lorem mollit quis duis occaecat aliquip. Voluptate
+                          incididunt culpa dolore exercitation
+                          sit ullamco commodo. Irure elit laboris nisi cupidatat quis eu aliqua cillum laborum id nisi
+                          laborum. Occaecat voluptate id esse occaecat ullamco excepteur ad eiusmod labore excepteur ea
+                          ut
+                          mollit. Id occaecat nisi sunt cillum ea aute occaecat. Sit in cupidatat nostrud in Lorem
+                          adipisicing.</p>
+
+                        <p class="card-text">&nbsp;&nbsp;Non quis consequat esse irure labore aliquip sit amet. Elit
+                          dolor do enim reprehenderit
+                          voluptate ut laborum aliquip esse laboris esse veniam adipisicing adipisicing. Sunt ipsum non
+                          adipisicing quis commodo sint qui. Proident pariatur irure adipisicing sunt laboris pariatur
+                          incididunt commodo eiusmod ad irure. Aliquip aliquip consequat dolor ex deserunt dolor
+                          consectetur aliquip eiusmod ex elit exercitation est.</p>
+
+                        <p class="card-text">&nbsp;&nbsp;Proident eiusmod nostrud aliquip ullamco esse consequat amet
+                          irure laboris voluptate. Nisi magna
+                          reprehenderit fugiat exercitation ex voluptate excepteur tempor et eu veniam irure nostrud
+                          officia. Incididunt culpa nulla Lorem dolor sit est nulla dolor id deserunt esse ad fugiat
+                          eiusmod. Incididunt adipisicing exercitation ullamco nisi nostrud adipisicing quis enim dolor
+                          aute nisi. Ea incididunt fugiat eu laborum dolor aliqua eiusmod reprehenderit in. Eiusmod
+                          dolor
+                          laborum dolore et officia laborum qui cupidatat duis in elit. Sit sunt fugiat enim ipsum sunt
+                          ullamco exercitation ut deserunt amet.</p>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button class="w-100 btn btn-primary btn-lg" type="submit">
+            <fa-icon [icon]="faFloppyDisk"></fa-icon> บันทึก
+          </button>
+        </form>
+      </div>
+    </div>
+  </main>
+</div>
