@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import {
   FormGroup,
   FormBuilder,
@@ -13,6 +14,8 @@ import {
   faPhone,
   faCar,
   faFloppyDisk,
+  faCheck,
+  faXmark,
 } from '@fortawesome/free-solid-svg-icons';
 import { UserDataService } from '../services/users-data.services';
 
@@ -21,27 +24,51 @@ import { UserDataService } from '../services/users-data.services';
   templateUrl: './form-user.component.html',
   styleUrls: ['./form-user.component.scss'],
 })
-export class FormUserComponent {
+export class FormUserComponent implements OnInit {
   faAddressCard = faAddressCard;
   faUser = faUser;
   faCircle = faCircle;
   faPhone = faPhone;
   faCar = faCar;
   faFloppyDisk = faFloppyDisk;
+  faCheck = faCheck;
+  faXmark = faXmark;
 
-  _ptCarMotor = '^[a-z0-9_-]{8,15}$';
   _ptEmail = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   _ptTal = '/^[0-9]d*$/';
 
   angForm: FormGroup;
   users: any;
+  orderby: string;
 
   constructor(
+    private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userData: UserDataService
-  ) {
+  ) {}
+
+  ngOnInit() {
+    this.route.queryParams.subscribe((params) => {
+      console.log(params);
+    });
+
+    this.formValidator();
+
+    this.userData.users().subscribe((data) => {
+      this.users = data;
+    });
+  }
+
+  formValidator() {
     this.angForm = this.formBuilder.group({
-      uCard: [null, [Validators.required]],
+      uCard: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern('^[0-9]*$'),
+          Validators.minLength(13),
+        ],
+      ],
       uFullName: [null, [Validators.required]],
       uTel: [
         null,
@@ -60,13 +87,9 @@ export class FormUserComponent {
         [Validators.required, Validators.pattern(/^(?:[a-zA-Z0-9\s]+)?$/)],
       ],
     });
-
-    this.userData.users().subscribe((data) => {
-      this.users = data;
-    });
   }
 
-  getUserFormData(data: any) {
+  handleSubmitForm(data: any) {
     if (this.angForm.valid) {
       this.userData.saveUser(data).subscribe((res) => {
         console.warn(res);

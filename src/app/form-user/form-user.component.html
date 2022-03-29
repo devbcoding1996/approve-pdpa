@@ -6,7 +6,7 @@
           <img src="../../assets/img/Suzuki_Motor_Corporation_logo.svg.png" alt="" height="57">
         </div>
         <h4 class="my-3 text-primary">ข้อมูลของท่านที่ถูกจัดเก็บ</h4>
-        <form [formGroup]="angForm" #userForm="ngForm" (ngSubmit)="getUserFormData(userForm.value)" novalidate
+        <form [formGroup]="angForm" #userForm="ngForm" (ngSubmit)="handleSubmitForm(userForm.value)" novalidate
           class="needs-validation">
           <div class="row g-3">
             <div class="col-sm-6">
@@ -16,14 +16,18 @@
                   <fa-icon [icon]="faAddressCard"></fa-icon>
                 </span>
                 <input type="text" class="form-control" id="uCard" ngModel formControlName="uCard" autocomplete="off"
-                  placeholder="กรอกหมายเลขบัตรประชาชน">
+                  maxlength="13" placeholder="กรอกหมายเลขบัตรประชาชน">
               </div>
               <div
                 *ngIf="angForm.controls['uCard'].invalid && (angForm.controls['uCard'].dirty || angForm.controls['uCard'].touched)"
                 class="text-danger">
-                <p class="m-0" *ngIf="angForm.controls['uCard'].errors?.['required']">
+                <div class="m-0" *ngIf="angForm.controls['uCard'].errors?.['required']">
                   กรุณากรอกหมายเลขบัตรประชาชน.
-                </p>
+                </div>
+                <div class="m-0"
+                  *ngIf="angForm.controls['uCard'].errors?.['pattern'] || angForm.controls['uCard'].errors?.['minlength']">
+                  กรุณากรอกหมายเลขให้ครบ 13 หลัก.
+                </div>
               </div>
             </div>
             <div class="col-sm-6">
@@ -105,6 +109,7 @@
               </div>
             </div>
           </div>
+
           <div class="col-sm-12 my-4">
             <div class="card">
               <div class="card-header">
@@ -126,10 +131,16 @@
                   เพื่อรับทราบถึงสิทธิต่างๆ ของท่าน และนโยบายของบริษัทฯ
                   ในการปฏิบัติตามประราชบัญญัติคุ้มครองข้อมูลส่วนบุคคล พ.ศ. 2562** <a href="#"
                     class="text-decoration-none" data-bs-toggle="modal"
-                    data-bs-target="#policyModal">>>นโยบายความเป็นส่วนตัว</a></p>
-                <!-- Button trigger modal -->
-
-                <!-- Modal -->
+                    data-bs-target="#policyModal">>>นโยบายความเป็นส่วนตัว</a>
+                </p>
+                <div class="d-flex justify-content-end">
+                  <button class="btn btn-primary mx-2" type="submit">
+                    <fa-icon [icon]="faCheck"></fa-icon> ยินยอม
+                  </button>
+                  <button class="btn btn-secondary" type="reset">
+                    <fa-icon [icon]="faXmark"></fa-icon> ไม่ยินยอม
+                  </button>
+                </div>
                 <div class="modal fade" id="policyModal" tabindex="-1" aria-labelledby="policyModalLabel"
                   aria-hidden="true">
                   <div class="modal-dialog  modal-xl">
@@ -215,9 +226,6 @@
               </div>
             </div>
           </div>
-          <button class="w-100 btn btn-primary btn-lg" type="submit">
-            <fa-icon [icon]="faFloppyDisk"></fa-icon> บันทึก
-          </button>
         </form>
       </div>
     </div>

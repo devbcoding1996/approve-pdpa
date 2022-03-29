@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const environment = {\n  production: true,\n  apiUrl: 'https://www.4insurance.co.th'\n};","map":null,"metadata":{},"sourceType":"module"}
