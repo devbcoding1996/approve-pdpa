@@ -15,8 +15,8 @@
                 <span class="input-group-text">
                   <fa-icon [icon]="faAddressCard"></fa-icon>
                 </span>
-                <input type="text" class="form-control" id="uCard" ngModel formControlName="uCard" autocomplete="off"
-                  maxlength="13" placeholder="กรอกหมายเลขบัตรประชาชน">
+                <input type="text" class="form-control" id="uCard" formControlName="uCard" autocomplete="off"
+                  ngModel="{{_uCard}}" value="{{_uCard}}" maxlength="13" placeholder="กรอกหมายเลขบัตรประชาชน">
               </div>
               <div
                 *ngIf="angForm.controls['uCard'].invalid && (angForm.controls['uCard'].dirty || angForm.controls['uCard'].touched)"
@@ -37,7 +37,8 @@
                   <fa-icon [icon]="faUser"></fa-icon>
                 </span>
                 <input type="text" class="form-control" id="uFullName" ngModel formControlName="uFullName"
-                  placeholder="กรอกชื่อ-นามสกุล ผู้เอาประกันภัย" value="">
+                  ngModel="{{_uFullName}}" value="{{_uFullName}}" placeholder="กรอกชื่อ-นามสกุล ผู้เอาประกันภัย"
+                  value="">
               </div>
               <div
                 *ngIf="angForm.controls['uFullName'].invalid && (angForm.controls['uFullName'].dirty || angForm.controls['uFullName'].touched)"
@@ -55,7 +56,7 @@
                   <fa-icon [icon]="faPhone"></fa-icon>
                 </span>
                 <input type="tel" class="form-control" id="uTel" ngModel formControlName="uTel" maxlength="10"
-                  autocomplete="off" placeholder="กรอกเบอร์โทรศัพท์" value="">
+                  ngModel="{{_uTel}}" value="{{_uTel}}" autocomplete="off" placeholder="กรอกเบอร์โทรศัพท์" value="">
               </div>
               <div *ngIf="angForm.controls['uTel'].invalid && angForm.controls['uTel'].touched" class="text-danger">
                 <div *ngIf="angForm.controls['uTel'].errors?.['required']">
@@ -68,21 +69,21 @@
               </div>
             </div>
             <div class="col-sm-4">
-              <label for="uCarCody" class="form-label">เลขตัวถังรถยนต์</label>
+              <label for="uCarBody" class="form-label">เลขตัวถังรถยนต์</label>
               <div class="input-group has-validation">
                 <span class="input-group-text">
                   <fa-icon [icon]="faCar"></fa-icon>
                 </span>
-                <input type="email" class="form-control" id="uCarCody" ngModel formControlName="uCarCody"
-                  placeholder="กรอกเลขตัวถังรถยนต์" value="">
+                <input type="email" class="form-control" id="uCarBody" ngModel formControlName="uCarBody"
+                  ngModel="{{_uCarBody}}" value="{{_uCarBody}}" placeholder="กรอกเลขตัวถังรถยนต์" value="">
               </div>
               <div
-                *ngIf="angForm.controls['uCarCody'].invalid && (angForm.controls['uCarCody'].dirty || angForm.controls['uCarCody'].touched)"
+                *ngIf="angForm.controls['uCarBody'].invalid && (angForm.controls['uCarBody'].dirty || angForm.controls['uCarBody'].touched)"
                 class="text-danger">
-                <div *ngIf="angForm.controls['uCarCody'].errors?.['required']">
+                <div *ngIf="angForm.controls['uCarBody'].errors?.['required']">
                   กรุณากรอกเลขตัวถังรถยนต์.
                 </div>
-                <div *ngIf="angForm.controls['uCarCody'].errors?.['pattern']">
+                <div *ngIf="angForm.controls['uCarBody'].errors?.['pattern']">
                   ไม่อนุญาติกรอกภาษาไทย.
                 </div>
               </div>
@@ -94,8 +95,8 @@
                 <span class="input-group-text">
                   <fa-icon [icon]="faCar"></fa-icon>
                 </span>
-                <input type="text" class="form-control" id="uCarMotor" formControlName="uCarMotor"
-                  placeholder="กรอกเลขตัวเครื่องรถยนต์">
+                <input type="text" class="form-control" id="uCarMotor" ngModel formControlName="uCarMotor"
+                  ngModel="{{_uCarMotor}}" value="{{_uCarMotor}}" placeholder="กรอกเลขตัวเครื่องรถยนต์">
               </div>
               <div
                 *ngIf="angForm.controls['uCarMotor'].invalid && (angForm.controls['uCarMotor'].dirty || angForm.controls['uCarMotor'].touched)"
@@ -109,7 +110,6 @@
               </div>
             </div>
           </div>
-
           <div class="col-sm-12 my-4">
             <div class="card">
               <div class="card-header">
@@ -231,3 +231,10 @@
     </div>
   </main>
 </div>
+<ngx-loading [show]="loading" [config]="{
+        animationType: ngxLoadingAnimationTypes.doubleBounce,
+        primaryColour: primaryColour,
+        secondaryColour: secondaryColour,
+        backdropBorderRadius: '3px'
+      }" [template]="loadingTemplate">
+</ngx-loading>
