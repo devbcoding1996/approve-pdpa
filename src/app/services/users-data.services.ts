@@ -9,14 +9,14 @@ export class UserDataService {
   baseUrl = 'http://localhost/suzuki/services/SuzukiUserDetail';
   constructor(private http: HttpClient) {}
 
-  getUser() {
+  getUser(data: any) {
     return this.http
       .get<any>(
-        `${this.baseUrl}/suzuki-user-detail.api.controller.php?uController=GetUserDetail`
+        `${this.baseUrl}/suzuki-user-detail.api.controller.php?uController=GetUserDetail&uDataID=${data}`
       )
       .pipe(
         map((res: any) => {
-          return res.Data;
+          return res;
         })
       );
   }
@@ -30,7 +30,7 @@ export class UserDataService {
       )
       .pipe(
         map((res: any) => {
-          return res.Data;
+          return res;
         })
       );
   }

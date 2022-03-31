@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  TemplateRef,
-  ViewContainerRef,
-} from '@angular/core';
+import { Component, OnInit, ViewChild, TemplateRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import {
   FormGroup,
@@ -30,10 +24,9 @@ import { ToastrService } from 'ngx-toastr';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
-const PrimaryRed = '#dd0031';
-const SecondaryBlue = '#1976d2';
 
-@Component({
+@Component(
+{
   selector: 'app-form-user',
   templateUrl: './form-user.component.html',
   styleUrls: ['./form-user.component.scss'],
@@ -76,26 +69,30 @@ export class FormUserComponent implements OnInit {
   _uTel: string;
   _uCarBody: string;
   _uCarMotor: string;
-
+  _uDataID: any;
   _ptEmail = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   _ptTal = '/^[0-9]d*$/';
 
   angForm: FormGroup;
 
-  constructor(
+  constructor
+  (
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userData: UserDataService,
     private toastr: ToastrService
-  ) {
+  )
+  {
     this.formValidator();
   }
 
   ngOnInit() {
     this.route.queryParams.subscribe((...params) => {
-      console.log('params', ...params);
+      params.map((res: any) => {
+        this._uDataID = res.DataID;
+        this.handleGetDetail(res.DataID);
+      });
     });
-    this.handleGetDetail();
   }
 
   formValidator() {
@@ -125,58 +122,83 @@ export class FormUserComponent implements OnInit {
         null,
         [Validators.required, Validators.pattern(/^(?:[a-zA-Z0-9._%+-\s]+)?$/)],
       ],
+      uDataID: [null],
     });
   }
 
-  handleGetDetail() {
-    this.userData.getUser().subscribe({
+  handleGetDetail(data: any)
+  {
+    this.userData.getUser(data).subscribe(
+    {
       next: (response) => this.handleGetResponseSuccess(response),
       error: (error) => this.handleGetResponseError(error),
     });
   }
 
   handleGetResponseSuccess(res: any) {
-    this._uCard = res.uCard;
-    this._uFullName = res.uFullName;
-    this._uTel = res.uTel;
-    this._uCarBody = res.uCarBody;
-    this._uCarMotor = res.uCarMotor;
+    if (res.Status == 400) {
+      this.toastr.error(res.Data, 'ผิดพลาด!');
+    } else {
+      this._uCard = res.Data.uCard;
+      this._uFullName = res.Data.uFullName;
+      this._uTel = res.Data.uTel;
+      this._uCarBody = res.Data.uCarBody;
+      this._uCarMotor = res.Data.uCarMotor;
+    }
   }
 
   handleGetResponseError(error: any) {
     this.toastr.error(error.message, 'ผิดพลาด!');
   }
 
-  handleSubmitForm(data: any) {
-    if (this.angForm.valid) {
+  handleSubmitForm(data: any)
+  {
+    if (this.angForm.valid)
+    {
       this.loading = true;
       this.userData.postUser(data).subscribe({
         next: (...response) => this.handleSubmitResponseSuccess(...response),
         error: (...error) => this.handleSubmitResponseError(...error),
       });
-    } else {
+    }
+    else
+    {
       this.validateAllFormFields(this.angForm);
     }
   }
 
-  handleSubmitResponseSuccess(res: any) {
+  handleSubmitResponseSuccess(res: any)
+  {
     console.log(res);
     this.loading = false;
-    this.toastr.error(res.message, 'สำเร็จ!');
+    if (res.Status == 400)
+    {
+      this.toastr.warning(res.Data, 'ผิดพลาด!');
+    }
+    else
+    {
+      this.toastr.success("ข้อมูลของท่านได้รับการยืนยันแล้ว", 'สำเร็จ!');
+    }
   }
 
-  handleSubmitResponseError(error: any) {
+  handleSubmitResponseError(error: any)
+  {
     console.log(error);
     this.loading = false;
-    this.toastr.error(error.message, 'ผิดพลาด!');
+    this.toastr.error("บันทึกข้อมูลไม่สำเร็จ", 'ผิดพลาด!');
   }
 
-  validateAllFormFields(formGroup: FormGroup) {
-    Object.keys(formGroup.controls).forEach((field) => {
+  validateAllFormFields(formGroup: FormGroup)
+  {
+    Object.keys(formGroup.controls).forEach((field) =>
+    {
       const control = formGroup.get(field);
-      if (control instanceof FormControl) {
+      if (control instanceof FormControl)
+      {
         control.markAsTouched({ onlySelf: true });
-      } else if (control instanceof FormGroup) {
+      }
+      else if (control instanceof FormGroup)
+       {
         this.validateAllFormFields(control);
       }
     });
