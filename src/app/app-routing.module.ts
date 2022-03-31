@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { FormUserComponent } from './form-user/form-user.component';
 const routes: Routes = [
   {
-    path: 'user-policy',
+    path: '',
     component: FormUserComponent,
   },
 ];
