@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
-
+import { environment } from '../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class UserDataService {
-  // baseUrl = 'http://localhost/suzuki/services/SuzukiUserDetail'; // dev
-  baseUrl = 'https://my4ib.com/suzuki/services/SuzukiUserDetail'; // prod
+  apiURL = environment.apiURL;
+  baseUrl = `${this.apiURL}/suzuki/services/SuzukiUserDetail`;
   constructor(private http: HttpClient) {}
 
   getUser(data: any) {
