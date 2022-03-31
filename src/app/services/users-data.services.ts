@@ -6,7 +6,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root',
 })
 export class UserDataService {
-  baseUrl = 'http://localhost/suzuki/services/SuzukiUserDetail';
+  // baseUrl = 'http://localhost/suzuki/services/SuzukiUserDetail'; // dev
+  baseUrl = 'https://my4ib.com/suzuki/services/SuzukiUserDetail'; // prod
   constructor(private http: HttpClient) {}
 
   getUser(data: any) {
