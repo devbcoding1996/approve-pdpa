@@ -92,8 +92,8 @@ export class FormUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((params) => {
-      console.log('params', params);
+    this.route.queryParams.subscribe((...params) => {
+      console.log('params', ...params);
     });
     this.handleGetDetail();
   }
