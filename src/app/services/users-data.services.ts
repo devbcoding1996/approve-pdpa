@@ -27,7 +27,7 @@ export class UserDataService {
     return this.http
       .post<any>(
         `${this.baseUrl}/suzuki-user-detail.api.controller.php?uController=PostUserDetail`,
-        data
+        JSON.stringify(data)
       )
       .pipe(
         map((res: any) => {

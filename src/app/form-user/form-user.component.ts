@@ -6,6 +6,7 @@ import {
   Validators,
   FormControl,
 } from '@angular/forms';
+import { environment } from 'src/environments/environment';
 
 import {
   faAddressCard,
@@ -25,8 +26,7 @@ import { ToastrService } from 'ngx-toastr';
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
 
-@Component(
-{
+@Component({
   selector: 'app-form-user',
   templateUrl: './form-user.component.html',
   styleUrls: ['./form-user.component.scss'],
@@ -40,6 +40,7 @@ export class FormUserComponent implements OnInit {
   emptyLoadingTemplate!: TemplateRef<any>;
 
   showingTemplate = false;
+  imgUrl = environment.imgPath;
 
   public ngxLoadingAnimationTypes = ngxLoadingAnimationTypes;
   public loading: any;
@@ -75,14 +76,12 @@ export class FormUserComponent implements OnInit {
 
   angForm: FormGroup;
 
-  constructor
-  (
+  constructor(
     private route: ActivatedRoute,
     private formBuilder: FormBuilder,
     private userData: UserDataService,
     private toastr: ToastrService
-  )
-  {
+  ) {
     this.formValidator();
   }
 
@@ -126,10 +125,8 @@ export class FormUserComponent implements OnInit {
     });
   }
 
-  handleGetDetail(data: any)
-  {
-    this.userData.getUser(data).subscribe(
-    {
+  handleGetDetail(data: any) {
+    this.userData.getUser(data).subscribe({
       next: (response) => this.handleGetResponseSuccess(response),
       error: (error) => this.handleGetResponseError(error),
     });
@@ -151,54 +148,40 @@ export class FormUserComponent implements OnInit {
     this.toastr.error(error.message, 'ผิดพลาด!');
   }
 
-  handleSubmitForm(data: any)
-  {
-    if (this.angForm.valid)
-    {
+  handleSubmitForm(data: any) {
+    if (this.angForm.valid) {
       this.loading = true;
       this.userData.postUser(data).subscribe({
         next: (...response) => this.handleSubmitResponseSuccess(...response),
         error: (...error) => this.handleSubmitResponseError(...error),
       });
-    }
-    else
-    {
+    } else {
       this.validateAllFormFields(this.angForm);
     }
   }
 
-  handleSubmitResponseSuccess(res: any)
-  {
+  handleSubmitResponseSuccess(res: any) {
     console.log(res);
     this.loading = false;
-    if (res.Status == 400)
-    {
+    if (res.Status == 400) {
       this.toastr.warning(res.Data, 'ผิดพลาด!');
-    }
-    else
-    {
-      this.toastr.success("ข้อมูลของท่านได้รับการยืนยันแล้ว", 'สำเร็จ!');
+    } else {
+      this.toastr.success('ข้อมูลของท่านได้รับการยืนยันแล้ว', 'สำเร็จ!');
     }
   }
 
-  handleSubmitResponseError(error: any)
-  {
+  handleSubmitResponseError(error: any) {
     console.log(error);
     this.loading = false;
-    this.toastr.error("บันทึกข้อมูลไม่สำเร็จ", 'ผิดพลาด!');
+    this.toastr.error('บันทึกข้อมูลไม่สำเร็จ', 'ผิดพลาด!');
   }
 
-  validateAllFormFields(formGroup: FormGroup)
-  {
-    Object.keys(formGroup.controls).forEach((field) =>
-    {
+  validateAllFormFields(formGroup: FormGroup) {
+    Object.keys(formGroup.controls).forEach((field) => {
       const control = formGroup.get(field);
-      if (control instanceof FormControl)
-      {
+      if (control instanceof FormControl) {
         control.markAsTouched({ onlySelf: true });
-      }
-      else if (control instanceof FormGroup)
-       {
+      } else if (control instanceof FormGroup) {
         this.validateAllFormFields(control);
       }
     });

@@ -1,0 +1,1 @@
+{"ast":null,"code":"export const environment = {\n  production: true,\n  title: 'Production Environment Heading',\n  apiURL: 'https://www.my4ib.com',\n  imgPath: 'suzuki-approve'\n};","map":null,"metadata":{},"sourceType":"module"}
