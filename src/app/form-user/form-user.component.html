@@ -135,14 +135,6 @@
                     class="text-decoration-none" data-bs-toggle="modal"
                     data-bs-target="#policyModal">>>นโยบายความเป็นส่วนตัว</a>
                 </p>
-                <div class="d-flex justify-content-end">
-                  <button class="btn btn-primary mx-2" type="submit">
-                    <fa-icon [icon]="faCheck"></fa-icon> ยินยอม
-                  </button>
-                  <button class="btn btn-secondary" type="reset">
-                    <fa-icon [icon]="faXmark"></fa-icon> ไม่ยินยอม
-                  </button>
-                </div>
                 <div class="modal fade" id="policyModal" tabindex="-1" aria-labelledby="policyModalLabel"
                   aria-hidden="true">
                   <div class="modal-dialog  modal-xl">
@@ -220,7 +212,12 @@
                           ullamco exercitation ut deserunt amet.</p>
                       </div>
                       <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button>
+                        <button class="btn btn-primary mx-2" type="submit">
+                          <fa-icon [icon]="faCheck"></fa-icon> ยินยอม
+                        </button>
+                        <button class="btn btn-secondary" type="reset" data-bs-dismiss="modal">
+                          <fa-icon [icon]="faXmark"></fa-icon> ไม่ยินยอม
+                        </button>
                       </div>
                     </div>
                   </div>
