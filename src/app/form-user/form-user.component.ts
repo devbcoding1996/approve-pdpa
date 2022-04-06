@@ -161,12 +161,13 @@ export class FormUserComponent implements OnInit {
   }
 
   handleSubmitResponseSuccess(res: any) {
-    console.log(res);
     this.loading = false;
     if (res.Status == 400) {
       this.toastr.warning(res.Data, 'ผิดพลาด!');
+      document.getElementById('btn-close')?.click();
     } else {
       this.toastr.success('ข้อมูลของท่านได้รับการยืนยันแล้ว', 'สำเร็จ!');
+      document.getElementById('btn-close')?.click();
     }
   }
 
@@ -174,6 +175,7 @@ export class FormUserComponent implements OnInit {
     console.log(error);
     this.loading = false;
     this.toastr.error('บันทึกข้อมูลไม่สำเร็จ', 'ผิดพลาด!');
+    document.getElementById('btn-close')?.click();
   }
 
   validateAllFormFields(formGroup: FormGroup) {
