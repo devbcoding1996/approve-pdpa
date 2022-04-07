@@ -5,6 +5,7 @@ import {
   FormBuilder,
   Validators,
   FormControl,
+  FormArray,
 } from '@angular/forms';
 import { environment } from 'src/environments/environment';
 
@@ -22,6 +23,7 @@ import { UserDataService } from '../services/users-data.services';
 import { ngxLoadingAnimationTypes } from 'ngx-loading';
 import { NgxLoadingComponent } from 'ngx-loading';
 import { ToastrService } from 'ngx-toastr';
+import { invalid } from '@angular/compiler/src/render3/view/util';
 
 const PrimaryWhite = '#ffffff';
 const SecondaryGrey = '#ccc';
@@ -70,7 +72,7 @@ export class FormUserComponent implements OnInit {
   _uTel: string;
   _uCarBody: string;
   _uCarMotor: string;
-  _uDataID: any;
+  _uDataID: string;
   _ptEmail = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
   _ptTal = '/^[0-9]d*$/';
 
@@ -122,6 +124,7 @@ export class FormUserComponent implements OnInit {
         [Validators.required, Validators.pattern(/^(?:[a-zA-Z0-9._%+-\s]+)?$/)],
       ],
       uDataID: [null],
+      uAcceptPolicy: [null, [Validators.required]],
     });
   }
 
@@ -176,6 +179,23 @@ export class FormUserComponent implements OnInit {
     this.loading = false;
     this.toastr.error('บันทึกข้อมูลไม่สำเร็จ', 'ผิดพลาด!');
     document.getElementById('btn-close')?.click();
+  }
+
+  handleReject() {
+    this.toastr
+      .success(
+        'ท่านไม่ยินยอมรับเงื่อนไขและข้อตกลง นโยบายความเป็นส่วนตัว',
+        'สำเร็จ!'
+      )
+      .onHidden.subscribe(() => {
+        console.log('toastr closed...');
+      });
+  }
+
+  handleCheckPolicy(event: any) {
+    if (event.target.checked == false) {
+      this.angForm.controls['uAcceptPolicy'].setErrors({'incorrect': true});
+    }
   }
 
   validateAllFormFields(formGroup: FormGroup) {
